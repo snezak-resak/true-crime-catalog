@@ -1,1712 +1,284 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Тру-Крайм Каталог</title>
-  <style>
-    /* ============ CSS ПЕРЕМЕННЫЕ ============ */
-    :root {
-      --bg: #0d0d0d;
-      --bg-card: #1a1a1a;
-      --bg-card-hover: #222;
-      --bg-elevated: #242424;
-      --text: #e8e8e8;
-      --text-secondary: #a0a0a0;
-      --text-muted: #6b6b6b;
-      --border: #2e2e2e;
-      --border-hover: #444;
-      --accent: #c41e3a;
-      --accent-hover: #e02a4a;
-      --accent-subtle: rgba(196, 30, 58, 0.12);
-      --accent-glow: rgba(196, 30, 58, 0.3);
-      --success: #2ecc71;
-      --success-subtle: rgba(46, 204, 113, 0.12);
-      --warning: #f39c12;
-      --warning-subtle: rgba(243, 156, 18, 0.12);
-      --info: #3498db;
-      --info-subtle: rgba(52, 152, 219, 0.12);
-      --radius: 12px;
-      --radius-sm: 8px;
-      --radius-xs: 6px;
-      --shadow: 0 4px 20px rgba(0,0,0,0.4);
-      --shadow-hover: 0 8px 32px rgba(0,0,0,0.6);
-      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --font-mono: 'SF Mono', 'Consolas', monospace;
-    }
+  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>True Crime Catalog — русскоязычные тру-крайм подкасты</title>
+<meta name="description" content="Каталог русскоязычных тру-крайм подкастов: о чём они и где искать.">
+<meta name="theme-color" content="#0B0B0F">
 
-    [data-theme="light"] {
-      --bg: #f5f3f0;
-      --bg-card: #ffffff;
-      --bg-card-hover: #faf8f6;
-      --bg-elevated: #ffffff;
-      --text: #1a1a1a;
-      --text-secondary: #555;
-      --text-muted: #888;
-      --border: #e0ddd8;
-      --border-hover: #c0bbb5;
-      --accent: #b01830;
-      --accent-hover: #c41e3a;
-      --accent-subtle: rgba(176, 24, 48, 0.08);
-      --accent-glow: rgba(176, 24, 48, 0.2);
-      --success: #1e8c4c;
-      --success-subtle: rgba(30, 140, 76, 0.1);
-      --warning: #d4880f;
-      --warning-subtle: rgba(212, 136, 15, 0.1);
-      --info: #2176a8;
-      --info-subtle: rgba(33, 118, 168, 0.1);
-      --shadow: 0 4px 20px rgba(0,0,0,0.08);
-      --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
-    }
+<!-- Open Graph / Social Media -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="True Crime Catalog — русскоязычные тру-крайм подкасты">
+<meta property="og:description" content="Каталог русскоязычных тру-крайм подкастов: о чём они и где искать.">
+<meta property="og:image" content="covers/og-preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
 
-    /* ============ СБРОС И БАЗА ============ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%23E63946'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Great+Vibes&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      transition: background var(--transition), color var(--transition);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ============ ПРОПУСК НАВИГАЦИИ ============ */
-    .skip-link {
-      position: absolute; top: -100px; left: 16px;
-      background: var(--accent); color: #fff;
-      padding: 8px 16px; border-radius: var(--radius-xs);
-      z-index: 1000; font-weight: 600; text-decoration: none;
-      transition: top 0.2s;
-    }
-    .skip-link:focus { top: 16px; }
-
-    /* ============ ШАПКА ============ */
-    .header {
-      position: sticky; top: 0; z-index: 100;
-      background: var(--bg); border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      background: color-mix(in srgb, var(--bg) 85%, transparent);
-    }
-
-    .header-inner {
-      max-width: 1280px; margin: 0 auto;
-      padding: 12px 20px;
-      display: flex; align-items: center; gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      font-size: 1.25rem; font-weight: 800;
-      letter-spacing: -0.5px; white-space: nowrap;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .logo-icon {
-      width: 28px; height: 28px;
-      background: var(--accent); border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 16px; font-weight: 900;
-    }
-    .logo span { color: var(--accent); }
-
-    .nav-tabs {
-      display: flex; gap: 4px;
-      background: var(--bg-elevated); border-radius: var(--radius-sm);
-      padding: 3px; border: 1px solid var(--border);
-    }
-
-    .nav-tab {
-      padding: 8px 18px; border: none; background: transparent;
-      color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;
-      border-radius: 6px; cursor: pointer; white-space: nowrap;
-      transition: all var(--transition); font-family: inherit;
-    }
-    .nav-tab:hover { color: var(--text); background: var(--bg-card-hover); }
-    .nav-tab:focus-visible {
-      outline: 2px solid var(--accent); outline-offset: 2px;
-    }
-    .nav-tab.active {
-      background: var(--accent); color: #fff;
-    }
-
-    .header-actions {
-      margin-left: auto; display: flex; align-items: center; gap: 8px;
-    }
-
-    .theme-toggle {
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid var(--border); background: var(--bg-elevated);
-      color: var(--text); cursor: pointer; font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all var(--transition);
-    }
-    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-    .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-    /* ============ ОСНОВНОЙ КОНТЕНТ ============ */
-    .main {
-      max-width: 1280px; margin: 0 auto; padding: 24px 20px 80px;
-    }
-
-    .section { display: none; }
-    .section.active { display: block; animation: fadeIn 0.35s ease; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ============ 18+ ПРЕДУПРЕЖДЕНИЕ ============ */
-    .warning-banner {
-      background: var(--accent-subtle);
-      border: 1px solid var(--accent);
-      border-radius: var(--radius); padding: 14px 20px;
-      margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
-      font-size: 0.85rem; color: var(--text-secondary);
-    }
-    .warning-banner strong { color: var(--accent); font-size: 1rem; }
-    .warning-banner .warn-icon { font-size: 1.4rem; flex-shrink: 0; }
-
-    /* ============ ПАНЕЛЬ УПРАВЛЕНИЯ ============ */
-    .toolbar {
-      display: flex; flex-wrap: wrap; gap: 10px;
-      margin-bottom: 20px; align-items: center;
-    }
-
-    .search-box {
-      flex: 1; min-width: 200px; position: relative;
-    }
-    .search-box input {
-      width: 100%; padding: 10px 14px 10px 38px;
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); color: var(--text);
-      font-size: 0.9rem; font-family: inherit;
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-    .search-box input:focus {
-      outline: none; border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    .search-box input::placeholder { color: var(--text-muted); }
-    .search-box .search-icon {
-      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
-      color: var(--text-muted); font-size: 0.95rem; pointer-events: none;
-    }
-
-    .btn {
-      padding: 10px 16px; border-radius: var(--radius-sm);
-      border: 1px solid var(--border); background: var(--bg-elevated);
-      color: var(--text); font-size: 0.85rem; font-weight: 600;
-      cursor: pointer; transition: all var(--transition);
-      font-family: inherit; white-space: nowrap;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .btn:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-1px); }
-    .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .btn:active { transform: translateY(0); }
-    .btn-accent { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .btn-accent:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
-    .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
-    .btn-ghost { background: transparent; border-color: transparent; color: var(--text-secondary); }
-    .btn-ghost:hover { background: var(--bg-elevated); color: var(--text); }
-
-    .filter-chips {
-      display: flex; flex-wrap: wrap; gap: 6px;
-      margin-bottom: 20px; align-items: center;
-    }
-    .chip {
-      padding: 6px 14px; border-radius: 20px;
-      border: 1px solid var(--border); background: var(--bg-elevated);
-      color: var(--text-secondary); font-size: 0.8rem; font-weight: 500;
-      cursor: pointer; transition: all var(--transition); font-family: inherit;
-      white-space: nowrap;
-    }
-    .chip:hover { border-color: var(--border-hover); color: var(--text); }
-    .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    /* ============ СТАТИСТИКА ============ */
-    .stats-row {
-      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;
-    }
-    .stat-card {
-      flex: 1; min-width: 120px;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 16px;
-      text-align: center; transition: all var(--transition);
-    }
-    .stat-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
-    .stat-value {
-      font-size: 1.6rem; font-weight: 800; color: var(--accent);
-      font-variant-numeric: tabular-nums;
-    }
-    .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
-
-    /* ============ ЗНАЧКИ ============ */
-    .badges-row {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
-    }
-    .badge-item {
-      display: flex; align-items: center; gap: 6px;
-      padding: 6px 12px; border-radius: 20px;
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      font-size: 0.78rem; color: var(--text-secondary);
-      transition: all var(--transition);
-    }
-    .badge-item.earned {
-      border-color: var(--warning); background: var(--warning-subtle);
-      color: var(--warning); font-weight: 600;
-    }
-    .badge-item .badge-emoji { font-size: 1rem; }
-
-    /* ============ СЕТКА ПОДКАСТОВ ============ */
-    .podcast-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 16px;
-    }
-
-    .podcast-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden;
-      transition: all var(--transition); position: relative;
-      display: flex; flex-direction: column;
-    }
-    .podcast-card:hover {
-      border-color: var(--border-hover);
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-3px);
-    }
-    .podcast-card:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-
-    .card-cover {
-      width: 100%; aspect-ratio: 16/9;
-      background: var(--bg-elevated);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-    }
-    .card-cover svg { width: 100%; height: 100%; }
-
-    .card-badges {
-      position: absolute; top: 8px; left: 8px;
-      display: flex; gap: 4px; flex-wrap: wrap;
-    }
-    .badge-tag {
-      padding: 3px 8px; border-radius: 4px;
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .badge-new { background: var(--success); color: #fff; }
-    .badge-popular { background: var(--warning); color: #000; }
-
-    .card-actions-top {
-      position: absolute; top: 8px; right: 8px;
-      display: flex; gap: 4px;
-    }
-    .card-action-btn {
-      width: 32px; height: 32px; border-radius: 50%;
-      border: none; background: rgba(0,0,0,0.6); color: #fff;
-      cursor: pointer; font-size: 0.85rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all var(--transition); backdrop-filter: blur(4px);
-    }
-    .card-action-btn:hover { background: var(--accent); transform: scale(1.1); }
-    .card-action-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-    .card-action-btn.active { background: var(--accent); }
-
-    .card-body {
-      padding: 16px; flex: 1; display: flex; flex-direction: column;
-    }
-    .card-title {
-      font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;
-      line-height: 1.3;
-    }
-    .card-desc {
-      font-size: 0.82rem; color: var(--text-secondary);
-      line-height: 1.5; margin-bottom: 10px; flex: 1;
-    }
-
-    .card-meta {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
-    }
-    .meta-tag {
-      padding: 3px 8px; border-radius: 4px;
-      font-size: 0.7rem; font-weight: 600;
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      color: var(--text-secondary);
-    }
-    .meta-humor { border-color: var(--warning); color: var(--warning); }
-    .meta-heavy { border-color: var(--accent); color: var(--accent); }
-    .meta-format { border-color: var(--info); color: var(--info); }
-
-    .card-topics {
-      display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px;
-    }
-    .topic-tag {
-      padding: 2px 8px; border-radius: 10px;
-      font-size: 0.68rem; background: var(--accent-subtle);
-      color: var(--accent); font-weight: 500;
-    }
-
-    .card-links {
-      display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto;
-    }
-    .card-links a {
-      font-size: 0.75rem; color: var(--text-secondary);
-      text-decoration: none; padding: 4px 10px;
-      border-radius: var(--radius-xs); border: 1px solid var(--border);
-      transition: all var(--transition); display: inline-flex;
-      align-items: center; gap: 4px;
-    }
-    .card-links a:hover {
-      border-color: var(--accent); color: var(--accent);
-      background: var(--accent-subtle);
-    }
-    .card-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-    /* ============ ПОДКАСТ ДНЯ ============ */
-    .podcast-of-day {
-      background: linear-gradient(135deg, var(--accent-subtle), transparent);
-      border: 1px solid var(--accent);
-      border-radius: var(--radius); padding: 20px;
-      margin-bottom: 24px; display: flex; gap: 16px;
-      align-items: center; flex-wrap: wrap;
-    }
-    .podcast-of-day .potd-label {
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--accent); margin-bottom: 4px;
-    }
-    .podcast-of-day h3 { font-size: 1.1rem; margin-bottom: 4px; }
-    .podcast-of-day p { font-size: 0.82rem; color: var(--text-secondary); }
-
-    /* ============ ПУСТОЕ СОСТОЯНИЕ ============ */
-    .empty-state {
-      text-align: center; padding: 60px 20px;
-      color: var(--text-muted);
-    }
-    .empty-state .empty-icon { font-size: 3rem; margin-bottom: 12px; }
-    .empty-state p { font-size: 0.9rem; }
-
-    /* ============ РАЗДЕЛ "УЗНАТЬ БОЛЬШЕ" ============ */
-    .learn-grid {
-      display: grid; grid-template-columns: 1fr; gap: 24px;
-    }
-
-    .learn-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 24px;
-      transition: all var(--transition);
-    }
-    .learn-card:hover { border-color: var(--border-hover); }
-    .learn-card h3 {
-      font-size: 1.15rem; margin-bottom: 12px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .learn-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
-
-    /* ============ ГЛОССАРИЙ ============ */
-    .glossary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 12px;
-    }
-    .glossary-item {
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 14px;
-      display: flex; gap: 12px; align-items: flex-start;
-      transition: all var(--transition);
-    }
-    .glossary-item:hover {
-      border-color: var(--accent); transform: translateX(4px);
-    }
-    .glossary-item:focus-within {
-      border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow);
-    }
-    .glossary-icon {
-      width: 44px; height: 44px; border-radius: var(--radius-xs);
-      flex-shrink: 0; overflow: hidden;
-    }
-    .glossary-icon svg { width: 100%; height: 100%; }
-    .glossary-term { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
-    .glossary-def { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
-
-    /* ============ ВИКТОРИНА ============ */
-    .quiz-container { max-width: 600px; }
-    .quiz-question {
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
-    }
-    .quiz-question p { font-weight: 600; margin-bottom: 12px; font-size: 0.9rem; }
-    .quiz-options { display: flex; flex-direction: column; gap: 8px; }
-    .quiz-option {
-      padding: 10px 14px; border-radius: var(--radius-sm);
-      border: 1px solid var(--border); background: var(--bg-card);
-      color: var(--text); cursor: pointer; font-size: 0.85rem;
-      text-align: left; font-family: inherit;
-      transition: all var(--transition);
-    }
-    .quiz-option:hover { border-color: var(--accent); background: var(--accent-subtle); }
-    .quiz-option:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .quiz-option.correct { border-color: var(--success); background: var(--success-subtle); color: var(--success); }
-    .quiz-option.wrong { border-color: var(--accent); background: var(--accent-subtle); color: var(--accent); }
-    .quiz-option:disabled { cursor: default; opacity: 0.7; }
-    .quiz-result {
-      text-align: center; padding: 20px;
-      font-size: 1rem; font-weight: 600;
-    }
-
-    /* ============ ИСТОРИЯ ЖАНРА ============ */
-    .timeline { position: relative; padding-left: 24px; }
-    .timeline::before {
-      content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
-      width: 2px; background: var(--border);
-    }
-    .timeline-item {
-      position: relative; margin-bottom: 20px;
-    }
-    .timeline-item::before {
-      content: ''; position: absolute; left: -20px; top: 6px;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--accent); border: 2px solid var(--bg);
-    }
-    .timeline-year {
-      font-size: 0.75rem; font-weight: 700; color: var(--accent);
-      text-transform: uppercase; letter-spacing: 0.5px;
-    }
-    .timeline-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
-
-    /* ============ КНИГИ И ФИЛЬМЫ ============ */
-    .media-list { display: flex; flex-direction: column; gap: 10px; }
-    .media-item {
-      background: var(--bg-elevated); border: 1px solid var(--border);
-      border-radius: var(--radius-sm); padding: 14px;
-      transition: all var(--transition);
-    }
-    .media-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
-    .media-item h4 { font-size: 0.9rem; margin-bottom: 2px; }
-    .media-item .media-author { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
-    .media-item .media-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
-    .media-type {
-      display: inline-block; padding: 2px 8px; border-radius: 4px;
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .media-type.book { background: var(--info-subtle); color: var(--info); }
-    .media-type.film { background: var(--warning-subtle); color: var(--warning); }
-
-    /* ============ ЭТИКА ============ */
-    .ethics-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-    .ethics-list li {
-      padding: 14px 16px; background: var(--bg-elevated);
-      border: 1px solid var(--border); border-radius: var(--radius-sm);
-      border-left: 3px solid var(--accent);
-      font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
-      transition: all var(--transition);
-    }
-    .ethics-list li:hover { border-left-color: var(--accent-hover); transform: translateX(4px); }
-    .ethics-list li strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 0.9rem; }
-
-    /* ============ МОИ КОЛЛЕКЦИИ ============ */
-    .collections-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-    .collection-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px;
-      transition: all var(--transition); cursor: pointer;
-    }
-    .collection-card:hover {
-      border-color: var(--accent); transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
-    .collection-card:focus-visible {
-      outline: 2px solid var(--accent); outline-offset: 2px;
-    }
-    .collection-card h4 { font-size: 1rem; margin-bottom: 6px; }
-    .collection-card p { font-size: 0.8rem; color: var(--text-secondary); }
-    .collection-count {
-      display: inline-block; margin-top: 10px;
-      padding: 4px 10px; border-radius: 12px;
-      background: var(--accent-subtle); color: var(--accent);
-      font-size: 0.75rem; font-weight: 700;
-    }
-
-    /* ============ МОДАЛЬНОЕ ОКНО ============ */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-      z-index: 200; display: none; align-items: center; justify-content: center;
-      padding: 20px; backdrop-filter: blur(4px);
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius); max-width: 520px; width: 100%;
-      max-height: 80vh; overflow-y: auto; padding: 24px;
-      box-shadow: var(--shadow-hover);
-      animation: modalIn 0.25s ease;
-    }
-    @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.95) translateY(10px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .modal-header {
-      display: flex; justify-content: space-between;
-      align-items: center; margin-bottom: 16px;
-    }
-    .modal-header h3 { font-size: 1.1rem; }
-    .modal-close {
-      width: 32px; height: 32px; border-radius: 50%;
-      border: 1px solid var(--border); background: var(--bg-elevated);
-      color: var(--text); cursor: pointer; font-size: 1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all var(--transition);
-    }
-    .modal-close:hover { border-color: var(--accent); color: var(--accent); }
-    .modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-    /* ============ ФУТЕР ============ */
-    .footer {
-      text-align: center; padding: 24px 20px;
-      font-size: 0.75rem; color: var(--text-muted);
-      border-top: 1px solid var(--border);
-    }
-
-    /* ============ АДАПТИВНОСТЬ ============ */
-    @media (max-width: 768px) {
-      .header-inner { padding: 10px 14px; gap: 10px; }
-      .logo { font-size: 1.05rem; }
-      .nav-tab { padding: 7px 12px; font-size: 0.8rem; }
-      .main { padding: 16px 14px 60px; }
-      .podcast-grid { grid-template-columns: 1fr; }
-      .stats-row { gap: 8px; }
-      .stat-card { min-width: 90px; padding: 12px; }
-      .stat-value { font-size: 1.3rem; }
-      .podcast-of-day { flex-direction: column; align-items: flex-start; }
-      .glossary-grid { grid-template-columns: 1fr; }
-      .collections-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 480px) {
-      .header-inner { flex-direction: column; align-items: stretch; }
-      .header-actions { margin-left: 0; justify-content: flex-end; }
-      .nav-tabs { width: 100%; justify-content: center; }
-      .nav-tab { flex: 1; text-align: center; }
-    }
-
-    /* ============ СКРОЛЛБАР ============ */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
-
-    /* ============ УТИЛИТЫ ============ */
-    .visually-hidden {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-  </style>
 </head>
-<body>
-
-<a href="#main-content" class="skip-link">Перейти к основному содержанию</a>
-
-<!-- ============ ШАПКА ============ -->
-<header class="header" role="banner">
-  <div class="header-inner">
-    <div class="logo">
-      <span class="logo-icon">ТК</span>
-      Тру<span>Крайм</span>
-    </div>
-    <nav class="nav-tabs" role="tablist" aria-label="Основная навигация">
-      <button class="nav-tab active" role="tab" aria-selected="true" aria-controls="section-podcasts" id="tab-podcasts" data-section="podcasts">Подкасты</button>
-      <button class="nav-tab" role="tab" aria-selected="false" aria-controls="section-learn" id="tab-learn" data-section="learn">Узнать больше</button>
-      <button class="nav-tab" role="tab" aria-selected="false" aria-controls="section-collections" id="tab-collections" data-section="collections">Мои коллекции</button>
+<body data-view="podcasts">
+<header class="header">
+  <div class="container header__in">
+    <a href="#top" class="logo"><span class="dot" aria-hidden="true"></span>True Crime Catalog</a>
+    <p class="head-stats" id="headStats" aria-live="polite"></p>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#top">Главная</a> <a href="#catalog">Каталог</a> <a href="#progress">Прогресс</a> <a href="#mine">Коллекции</a><a href="#learn">Узнать больше</a><a href="#faq">Вопросы</a>
     </nav>
-    <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" title="Переключить тему">🌙</button>
-    </div>
+    <button class="theme" id="theme" aria-label="Переключить светлую и тёмную тему">◐</button>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mmenu">☰</button>
   </div>
+  <nav class="container mmenu" id="mmenu" aria-label="Мобильная навигация" inert>
+    <a href="#catalog">Каталог</a><a href="#progress">Прогресс</a><a href="#faq">Вопросы</a><a href="#suggest">Предложить подкаст</a><a href="#mine">Мои коллекции</a><a href="#learn">Узнать больше</a><a href="#glossary">Глоссарий</a><a href="#quiz">Викторина</a><a href="#what">О жанре</a><a href="#history">История</a><a href="#media">Книги и кино</a><a href="#ethics">Этика жанра</a>
+  </nav>
 </header>
+<nav class="subnav" id="subnav" aria-label="Разделы «Узнать больше»"><div class="container subnav__in"><a href="#what">О жанре</a><a href="#history">История</a><a href="#media">Книги и кино</a><a href="#glossary">Глоссарий</a><a href="#quiz">Викторина</a><a href="#ethics">Этика жанра</a></div></nav>
 
-<!-- ============ МОДАЛЬНОЕ ОКНО ============ -->
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="modalTitle"></h3>
-      <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
-    </div>
-    <div id="modalBody"></div>
+<main id="top">
+<nav class="vsw" aria-label="Разделы сайта"><div class="vsw__in"><a href="#top" data-v="podcasts" aria-current="page">Главная</a><a href="#mine" data-v="mine"><svg class="vi" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"/></svg>Мои коллекции</a><a href="#learn" data-v="learn">Узнать больше</a></div></nav>
+
+<section class="hero container" data-view="podcasts">
+  <h1>Русскоязычные <span class="grad">тру-крайм</span> подкасты</h1>
+  <p>Коротко о том, про что каждый подкаст и в каком он тоне. Ищите по названию или выбирайте тему.</p>
+  <p class="stats" id="stats"></p>
+  <form class="search" role="search" onsubmit="return false">
+    <input id="search" type="search" placeholder="Название или описание" aria-label="Поиск подкастов">
+  </form>
+  <div class="rnd-wrap">
+    <a class="btn btn--p rnd" href="#catalog">Смотреть каталог</a>
+    <button type="button" class="btn rnd" id="random">🎲 Случайный подкаст</button>
+    <button type="button" class="chip" id="randomUnheard" aria-pressed="false">Только непрослушанные</button>
+    <a class="chip" href="#suggest" id="suggestBtn">＋ Предложить подкаст</a>
+    <button type="button" class="chip fl-toggle" id="flashToggle" aria-pressed="true">Фонарик: вкл</button>
   </div>
+  <p class="note">18+. Подкасты посвящены реальным преступлениям, материалы бывают тяжёлыми. Если тема для вас болезненна, выбирайте выпуски осторожно.</p>
+</section>
+
+<section class="section container" id="today" data-view="podcasts">
+  <h2>Сегодня на сайте</h2>
+  <div class="cols" id="todayBox"></div>
+</section>
+
+<section class="section container" id="finder" data-view="podcasts">
+  <h2>Подобрать подкаст</h2>
+  <p class="gl-note">Три вопроса, и сайт предложит, с чего начать.</p>
+  <div id="finderQ"></div>
+  <div class="grid" id="finderRes"></div>
+  <p class="kbd-hint">Клавиши: / поиск · r случайный · t тема · f избранное · цифры — темы (10 и дальше: цифры подряд, например 1 и 1) · Esc закрыть окно</p>
+</section>
+
+<section class="section container" id="catalog" data-view="podcasts">
+  <h2>Каталог</h2>
+  <div class="progress"><div class="pbar" id="pbar" role="progressbar" aria-label="Прослушано подкастов" aria-valuemin="0" aria-valuenow="0" aria-valuemax="10"><i id="pfill"></i></div><span id="ptext"></span></div>
+  <div class="tabrow"><div class="tabs" role="group" aria-label="Формат подкастов"><button type="button" class="seg" data-fmt="all" aria-pressed="true">Все</button><button type="button" class="seg" data-fmt="audio" aria-pressed="false">Аудио</button><button type="button" class="seg" data-fmt="video" aria-pressed="false">Видео</button></div>
+  <div class="tabs" role="tablist" aria-label="Вид каталога">
+    <button class="tab" role="tab" id="tab-list" aria-selected="true" aria-controls="grid" data-tab="list">Список</button>
+    <button class="tab" role="tab" id="tab-gallery" aria-selected="false" aria-controls="gallery" data-tab="gallery" tabindex="-1">Обложки</button>
+  </div><button type="button" class="chip" id="resetAll">Сбросить фильтры</button></div>
+  <div class="filters" id="tagFilters" role="group" aria-label="Фильтр по темам"></div>
+  <p class="status" id="status" role="status"></p>
+  <div class="grid" id="grid" role="tabpanel" aria-labelledby="tab-list"></div>
+  <div class="gallery" id="gallery" role="tabpanel" aria-labelledby="tab-gallery" hidden></div>
+</section>
+
+<section class="section container" id="recent" data-view="podcasts" hidden>
+  <h2>Недавно открывали</h2>
+  <div class="recent-row" id="recentRow"></div>
+</section>
+
+<section class="section container" id="collections" data-view="podcasts">
+  <h2>Подборки</h2>
+  <div class="cols3">
+    <button type="button" class="coll" data-collect="Комедия" style="--cc:#f0a030"><span class="cic"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 14.5c1 1.5 2.5 2.2 4 2.2s3-.7 4-2.2M9 9.5v.01M15 9.5v.01"/></svg></span><h3>С юмором</h3><p>Разговорный тон и шутки. Подойдёт, если тяжёлые темы проще слушать в такой подаче.</p></button>
+    <button type="button" class="coll" data-collect="Судебные процессы" style="--cc:#3a86c8"><span class="cic"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M7 20h10M5 7h14M5 7 2.5 13.5a3 3 0 0 0 5 0L5 7zM19 7l-2.5 6.5a3 3 0 0 0 5 0L19 7z"/></svg></span><h3>Судебные процессы</h3><p>Дела с точки зрения расследования и суда.</p></button>
+    <button type="button" class="coll" data-collect="Психология" style="--cc:#9b59b6"><span class="cic"><svg class="ci" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span><h3>Психология</h3><p>Мотивы, контекст и то, как о преступлениях рассказывают.</p></button>
+  </div>
+</section>
+
+<section class="section container" id="progress" data-view="podcasts">
+  <h2>Мой прогресс</h2> 
+  <p class="gl-note">Статистика и значки считаются по вашим отметкам. Данные хранятся только в этом браузере.</p> <div class="data-io" style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+  <button type="button" class="btn" id="btnExport">⬇ Экспорт данных</button>
+  <button type="button" class="btn" id="btnImport">⬆ Импорт данных</button>
+  <input type="file" id="fileImport" accept=".json,application/json" hidden>
+  <span id="ioStatus" role="status"></span>
 </div>
+  <div class="pstats" id="pstats"></div>
+  <div id="ptags"></div>
+  <h3 class="mt">Какой у меня вкус</h3>
+  <div id="tasteBox"></div>
+  <h3 class="mt">Моя очередь</h3>
+  <div id="queueBox"></div>
+  <p><a class="btn" href="#mycolls">+ Создать коллекцию</a></p>
+  <h3 class="mt">Значки <span id="bcount"></span></h3>
+  <div class="badges" id="badges"></div>
+</section>
 
-<!-- ============ ОСНОВНОЙ КОНТЕНТ ============ -->
-<main class="main" id="main-content">
+<section class="hero container" data-view="mine" id="mine">
+  <h1>Мои <span class="grad">коллекции</span></h1>
+  <p>Личные подборки вроде «Слушать в дороге» или «Перед сном». Видны только вам и хранятся в браузере.</p>
+</section>
 
-  <!-- ===== РАЗДЕЛ ПОДКАСТЫ ===== -->
-  <section class="section active" id="section-podcasts" role="tabpanel" aria-labelledby="tab-podcasts">
-    <div class="warning-banner" role="alert">
-      <span class="warn-icon">⚠️</span>
-      <div><strong>18+</strong> Материалы содержат описания реальных преступлений. Пожалуйста, отнеситесь с уважением к пострадавшим и их близким.</div>
+<section class="section container" id="mycolls" data-view="mine">
+  <h2>Мои коллекции</h2>
+  <p class="gl-note">Личные подборки вроде «Слушать в дороге» или «Перед сном». Видны только вам и хранятся в браузере.</p>
+  <div class="cform" id="collForm" role="group" aria-label="Новая коллекция"><input id="collName" maxlength="40" placeholder="Название коллекции" aria-label="Название коллекции"><button type="button" id="collAdd" class="btn btn--p">+ Создать коллекцию</button></div>
+  <div id="collList"></div>
+</section>
+
+<section class="hero container" data-view="learn" id="learn">
+  <h1>Узнать <span class="grad">больше</span></h1>
+  <p>Термины, викторина, история жанра, книги и правила этики. Всё, что помогает лучше понимать, о чём говорят подкасты.</p>
+  <div class="qlinks"><a class="btn" href="#glossary">Глоссарий</a><a class="btn" href="#quiz">Викторина</a><a class="btn" href="#history">История жанра</a><a class="btn" href="#media">Книги и кино</a><a class="btn" href="#ethics">Этика жанра</a></div>
+</section>
+
+<section class="section container text" id="what" data-view="learn">
+  <h2>Что такое true crime</h2>
+  <p>True crime — документальный жанр о реальных преступлениях: убийствах, исчезновениях, мошенничестве, громких судебных делах. Авторы опираются на архивы, судебные материалы и журналистские расследования.</p>
+  <p>Истории о настоящих преступлениях существовали задолго до подкастов: в книгах, газетах, на радио и телевидении. Подкаст «Serial» (2014) сделал именно этот формат массовым.</p>
+  <h3>Почему такие истории привлекают</h3>
+  <p>Исследователи называют несколько возможных причин: любопытство к опасности, которую можно изучать со стороны, желание понять мотивы людей, интерес к тому, как работает правосудие. Единого объяснения нет.</p>
+</section>
+
+<section class="section container" id="history" data-view="learn">
+  <h2>История жанра</h2>
+  <p class="gl-note">Короткая шкала: как истории о реальных преступлениях пришли в подкасты. Сначала общая картина, ниже — российский контекст.</p>
+  <ol class="tl">
+    <li data-era="XVIII–XIX века"><b>XVIII–XIX века</b><p>Сборники и газетные отчёты о громких процессах, например английский «Newgate Calendar». Читатели уже тогда интересовались реальными делами.</p></li>
+    <li data-era="1930-е"><b>1930-е</b><p>Криминальные радиопередачи в США. Истории о преступлениях впервые звучат в эфире.</p></li>
+    <li data-era="1966"><b>1966</b><p>Выходит «Хладнокровное убийство» Трумена Капоте. Документальный роман задаёт образец для книг жанра.</p></li>
+    <li data-era="1987–1988"><b>1987–1988</b><p>На американском ТВ появляется «Unsolved Mysteries», а фильм «Тонкая голубая линия» показывает, что документалистика может повлиять на судьбу осуждённого.</p></li>
+    <li data-era="2014"><b>2014</b><p>Подкаст «Serial» делает формат массовым: один случай рассказывают на протяжении всего сезона.</p></li>
+    <li data-era="2015–2016"><b>2015–2016</b><p>Выходят сериал «Making a Murderer» и подкаст «My Favorite Murder». Жанр делится на документальные расследования и разговорные подкасты с юмором.</p></li>
+    <li data-era="Сегодня"><b>Сегодня</b><p>Русскоязычные тру-крайм подкасты становятся заметным направлением: от судебных разборов до разговорных выпусков. Именно их собирает этот каталог.</p></li>
+  </ol>
+  <h3 class="mt tl-sub">В России и русскоязычном пространстве</h3>
+  <p class="gl-note">У нас жанр шёл своим путём: от судебной хроники и советских детективов к телепередачам и подкастам.</p>
+  <ol class="tl">
+    <li data-era="1860-е"><b>1860-е</b><p>Судебная реформа 1864 года вводит открытые заседания и суд присяжных. Газеты начинают публиковать судебные отчёты, а публичные процессы становятся темой для чтения и споров. Известным судебным оратором того времени был Анатолий Кони.</p></li>
+    <li data-era="1971"><b>1971</b><p>На экраны выходит «Следствие ведут ЗнаТоКи»: вымышленные дела, но формат милицейского расследования надолго становится для зрителей образцом. Майора Томина играет Леонид Каневский.</p></li>
+    <li data-era="Конец 1980-х — 1990-е"><b>Конец 1980-х — 1990-е</b><p>В годы гласности о преступлениях начинают говорить открыто, в том числе о серийных убийцах: громким делом стало дело Андрея Чикатило, арестованного в 1990 году. Криминальная хроника переходит на телевидение, а в 1990-е появляются целые рубрики и передачи о преступности.</p></li>
+    <li data-era="1995"><b>1995</b><p>Начинает выходить документальный цикл «Криминальная Россия» Давида Гамбурга. Он почти двадцать лет остаётся на экранах и формирует образ «лихих девяностых».</p></li>
+    <li data-era="2006"><b>2006</b><p>На НТВ стартует «Следствие вели…» с Леонидом Каневским: документальные истории о громких делах советской эпохи в формате расследования.</p></li>
+    <li data-era="Конец 2010-х — сегодня"><b>Конец 2010-х — сегодня</b><p>Тру-крайм приходит в русскоязычные подкасты: появляются проекты с разным тоном, от судебных разборов до разговорных выпусков с юмором. Многие из них собраны в нашем <a href="#catalog" style="text-decoration:underline">каталоге</a>.</p></li>
+  </ol>
+  <p class="gl-note"><a href="#media" style="text-decoration:underline">Что почитать и посмотреть</a></p>
+</section>
+
+<section class="section container" id="media" data-view="learn">
+  <h2>Книги и документальные фильмы</h2>
+  <p class="gl-note">Подборка для знакомства с жанром, это не рейтинг. Метки тяжести субъективны, как и в карточках подкастов; <a href="#severity" style="text-decoration:underline">критерии оценки</a>.</p>
+  <h3>Книги</h3>
+  <div class="gl-list"><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-01.jpg" alt="Обложка книги: Хладнокровное убийство"><img src="images/img-02.jpg" alt=""></div><div class="bk-tx"><h3>«Хладнокровное убийство»</h3><p>Трумен Капоте, 1966. Документальный роман об убийстве семьи в американской глубинке. С этой книги часто отсчитывают современный true crime.</p><span class="tag">Книга · материал: тяжёлый</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-03.jpg" alt="Обложка книги: Mindhunter. Охотник за разумом"><img src="images/img-04.jpg" alt=""></div><div class="bk-tx"><h3>«Mindhunter. Охотник за разумом»</h3><p>Джон Дуглас и Марк Олшейкер, 1995. Воспоминания сотрудника ФБР, одного из создателей криминального профилирования.</p><span class="tag">Книга · материал: тяжёлый</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-05.jpg" alt="Обложка книги: Дьявол в Белом городе"><img src="images/img-06.jpg" alt=""></div><div class="bk-tx"><h3>«Дьявол в Белом городе»</h3><p>Эрик Ларсон, 2003. История Всемирной выставки 1893 года в Чикаго и серийного убийцы, действовавшего в те же годы.</p><span class="tag">Книга · материал: средний</span></div></article><article class="gl-item bk"><div class="bk-ph"><img class="on" src="images/img-07.jpg" alt="Обложка книги: Записки следователя"></div><div class="bk-tx"><h3>«Записки следователя»</h3><p>Лев Шейнин. Рассказы советского следователя о реальных делах. Читать стоит с поправкой на эпоху, в которую они написаны.</p><span class="tag">Книга · материал: лёгкий</span></div></article></div>
+  <h3 class="mt tl-sub">Русскоязычные книги</h3>
+  <div class="gl-list"><article class="gl-item bk"><div class="bk-ph" data-n="3"><img class="on" src="images/img-08.jpg" alt="Обложка книги: Безлюдное место"><img src="images/img-09.jpg" alt=""><img src="images/img-10.jpg" alt=""></div><div class="bk-tx"><h3>«Безлюдное место. Как ловят маньяков в России»</h3><p>Саша Сулим, 2023. Журналистка рассказывает, как в России расследуют дела серийных убийц; в центре книги история ангарского маньяка Попкова.</p><span class="tag">Книга · материал: тяжёлый</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="3"><img class="on" src="images/img-11.jpg" alt="Обложка книги: Копейский маньяк"><img src="images/img-12.jpg" alt=""><img src="images/img-13.jpg" alt=""></div><div class="bk-tx"><h3>«Копейский маньяк»</h3><p>Алексей Решетун, 2025. Судмедэксперт разбирает дело Вячеслава Яикова: как быть с преступником, который не осознавал своих поступков из-за болезни.</p><span class="tag">Книга · материал: тяжёлый</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="3"><img class="on" src="images/img-14.jpg" alt="Обложка книги: Я иду искать"><img src="images/img-15.jpg" alt=""><img src="images/img-16.jpg" alt=""></div><div class="bk-tx"><h3>«Я иду искать»</h3><p>Ева Меркачёва, 2025. Подлинные истории о российских маньяках, рассказанные журналисткой.</p><span class="tag">Книга · материал: тяжёлый</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="3"><img class="on" src="images/img-17.jpg" alt="Обложка книги: Криминал Арт. 10 жутких историй"><img src="images/img-18.jpg" alt=""><img src="images/img-19.jpg" alt=""></div><div class="bk-tx"><h3>«Криминал Арт. 10 жутких историй, произошедших на самом деле»</h3><p>Ольга Мантро, 2023. Книга по мотивам её видеоформата, где реальные истории сопровождаются рисунками.</p><span class="tag">Книга · материал: средний</span></div></article></div>
+  <h3 class="mt tl-sub">Российские фильмы и передачи</h3>
+  <div class="gl-list"><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-20.jpg" alt="Постер передачи: Криминальная Россия"><img src="images/img-21.jpg" alt=""></div><div class="bk-tx"><h3>«Криминальная Россия»</h3><p>Давид Гамбург, с 1995 года. Документальный цикл о преступности 1990-х, на котором выросло целое поколение зрителей.</p><span class="tag">Документальный цикл · материал: тяжёлый</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-22.jpg" alt="Заставка передачи: Следствие вели"><img src="images/img-23.jpg" alt=""></div><div class="bk-tx"><h3>«Следствие вели…»</h3><p>НТВ, с 2006 года. Телепередача о громких делах в формате расследования, с инсценировками и Леонидом Каневским в роли ведущего.</p><span class="tag">Телепередача · материал: средний</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-24.jpg" alt="Кадр из сериала: Следствие ведут знатоки"><img src="images/img-25.jpg" alt=""></div><div class="bk-tx"><h3>«Следствие ведут ЗнаТоКи»</h3><p>СССР, с 1971 года. Это вымышленные дела, а не документалистика, но этот сериал сформировал образ милицейского расследования.</p><span class="tag">Сериал (художественный) · материал: лёгкий</span></div></article><article class="gl-item bk"><div class="bk-ph" data-n="2"><img class="on" src="images/img-26.jpg" alt="Заставка цикла: Легенды советского сыска"><img src="images/img-27.jpg" alt=""></div><div class="bk-tx"><h3>«Легенды советского сыска»</h3><p>Телеканал «Звезда», 2011. Цикл документальных фильмов о знаменитых уголовных делах советской эпохи: о преступниках и о сыщиках, которые их искали, и о том, как работали следователи без современных технологий.</p><span class="tag">Документальный цикл · материал: средний</span></div></article></div>
+</section>
+
+<section class="section container" id="glossary" data-view="learn">
+  <h2>Глоссарий для новичков</h2>
+  <p class="gl-note">Слова, которые часто звучат в подкастах. Объяснения упрощены и не заменяют юридическую консультацию. За основу взято российское право, в других странах правила могут отличаться.</p>
+  <p class="gl-note" id="glSlangNote" hidden>Это разговорные слова и жаргон, а не юридические термины: в протоколах и приговорах их не используют.</p>
+  <div class="tabs" role="tablist" aria-label="Раздел глоссария">
+    <button type="button" class="gtab" role="tab" id="gtab-terms" aria-selected="true" aria-controls="glList" data-g="terms">Термины</button>
+    <button type="button" class="gtab" role="tab" id="gtab-slang" aria-selected="false" aria-controls="glList" data-g="slang" tabindex="-1">Сленг подкастов</button>
+  </div>
+  <div class="gl-bar">
+    <form class="gl-search" role="search" onsubmit="return false"><input id="glSearch" type="search" placeholder="Найти слово" aria-label="Поиск по глоссарию"></form>
+    <div class="filters gl-chips" id="glChips" role="group" aria-label="Фильтр по группам"></div>
+  </div>
+  <p class="status" id="glStatus" role="status"></p>
+  <div class="gl-list" id="glList" role="tabpanel" aria-labelledby="gtab-terms"></div>
+</section>
+
+<section class="section container" id="quiz" data-view="learn">
+  <h2>Викторина</h2>
+  <p class="gl-note">Ситуации, в которых нужно выбрать выход (а иногда идеального выхода нет), мифы и факты по терминам из глоссария. Зубрить определения не нужно, важно понимать, как всё работает.</p>
+  <div class="qbox" id="quiz-box"></div>
+</section>
+
+<section class="section container text" id="severity" data-view="podcasts">
+  <h2>Как мы оцениваем тяжесть</h2>
+  <p>Метка в карточке показывает, насколько тяжёл материал подкаста в целом. Оценка субъективна и ставится редакцией по преобладающим темам, поэтому в отдельных выпусках всё может быть иначе. Ориентиры такие:</p>
+  <div class="sev-list">
+    <article class="sev" style="--sc:#3fae7a"><h3>Лёгкий</h3><p>Мошенничества, аферы и авантюры, городские легенды. Жертв насилия в центре историй нет.</p></article>
+    <article class="sev" style="--sc:#e8a02f"><h3>Средний</h3><p>Нераскрытые дела, исчезновения, секты. Насилие упоминается, но без подробных описаний.</p></article>
+    <article class="sev" style="--sc:#E63946"><h3>Тяжёлый</h3><p>Серийные убийства, насилие над детьми, подробные описания жестокости.</p></article>
+  </div>
+  <p class="sev-note">Шкала «Юмор» оценивается отдельно и описывает только манеру подачи. Шутливый подкаст не обязательно лёгкий: тема дела от тона не меняется. Если сомневаетесь, прочитайте описание выпуска и предупреждения перед прослушиванием.</p>
+</section>
+
+<section class="section container text" id="care" data-view="podcasts">
+  <h2>Для чувствительных слушателей</h2>
+  <p>Тру-крайм бывает тяжёлым, и это нормально. Несколько советов:</p>
+  <ul>
+    <li>Читайте описание выпуска и предупреждения, прежде чем включать.</li>
+    <li>В карточках есть метка тяжести материала (лёгкий, средний, тяжёлый). Это субъективная оценка редакции, критерии описаны в разделе <a href="#severity" style="text-decoration:underline">«Как мы оцениваем тяжесть»</a>.</li>
+    <li>Не слушайте перед сном, если после выпусков тревожно.</li>
+    <li>Если истории вызывают сильную тревогу или мешают жить, сделайте перерыв и обсудите это с близкими или специалистом.</li>
+  </ul>
+</section>
+
+<section class="section container" id="ethics" data-view="learn">
+  <h2>Этика жанра</h2>
+  <p class="gl-note">Несколько правил, которые помогают слушать и обсуждать реальные дела уважительно.</p>
+  <div class="gl-list">
+    <article class="gl-item"><h3>Помните о людях за делом</h3><p>За каждым делом стоят пострадавшие и их близкие. О преступлении можно рассказывать без смакования подробностей, из-за которых трагедия превращается в развлечение.</p></article>
+    <article class="gl-item"><h3>Версия — не факт</h3><p>Подозреваемый, обвиняемый и осуждённый — разные статусы. Пока приговор не вступил в силу, человек считается невиновным, а подкаст не заменяет суд.</p></article>
+    <article class="gl-item"><h3>Не ведите расследование сами</h3><p>Не разыскивайте участников дела, не выкладывайте адреса и фото, не обвиняйте людей в комментариях. Догадки слушателей уже приводили к травле невиновных.</p></article>
+    <article class="gl-item"><h3>Проверяйте источники</h3><p>Подкаст — это пересказ автора, а не документ. Сверяйтесь с судебными решениями и материалами СМИ: ведущие могут ошибаться, а дело с тех пор могли пересмотреть.</p></article>
+    <article class="gl-item"><h3>Смотрите, над чем шутят</h3><p>Юмор в жанре спорный. Шутки над собственной реакцией ведущих и над страданиями людей — разные вещи. Если второе вам неприятно, выбирайте подкасты с серьёзным тоном.</p></article>
+    <article class="gl-item"><h3>Берегите себя</h3><p>Если выпуски вызывают тревогу, сделайте паузу. Подробнее в разделе <a href="#care" style="text-decoration:underline">«Для чувствительных слушателей»</a>.</p></article>
+  </div>
+</section>
+
+<section class="section container" id="about" data-view="podcasts">
+  <div class="cols">
+    <div class="box"><h3>Как мы отбираем</h3><p>В каталог попадают подкаст-проекты, существование и авторство которых мы смогли проверить. Рейтингов нет: мы не измеряем популярность.</p></div>
+    <div class="box"><h3>Важно знать</h3><p>Описания краткие и составлены по открытым источникам. Состав ведущих и ссылки со временем меняются, сверяйтесь со страницей подкаста.</p></div>
+  </div>
+</section>
+
+<section class="section container text" id="suggest" data-view="podcasts">
+  <h2>Предложить подкаст</h2>
+  <p>Не нашли свой любимый или нишевый подкаст? Пришлите ссылку, и мы рассмотрим его для каталога. Берём русскоязычные проекты о реальных преступлениях, у которых можно проверить авторов и официальную страницу.</p>
+  <form class="sg" id="suggestForm" novalidate>
+    <label>Название подкаста <input id="sgName" name="name" type="text" maxlength="120" required autocomplete="off"></label>
+    <label>Ссылка <small>на страницу подкаста, канал или сайт</small><input id="sgUrl" name="url" type="url" inputmode="url" maxlength="300" placeholder="https://" required autocomplete="off"></label>
+    <label>Комментарий <small>необязательно: о чём подкаст, в каком он тоне</small><textarea id="sgNote" name="note" maxlength="600"></textarea></label>
+    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
+    <div class="sg-act">
+      <button type="submit" class="btn btn--p" id="sgMail">Отправить письмом</button>
+      <a class="btn" id="sgTg" href="#" target="_blank" rel="noopener" hidden>Написать в Telegram</a>
+      <button type="button" class="btn" id="sgCopy">Скопировать текст</button>
     </div>
+    <p class="sg-st" id="sgStatus" role="status" aria-live="polite"></p>
+    <p class="sg-priv"></p>
+  </form>
+</section>
 
-    <!-- Подкаст дня -->
-    <div class="podcast-of-day" id="podcastOfDay">
-      <div>
-        <div class="potd-label">🔥 Подкаст дня</div>
-        <h3 id="potdTitle">Загрузка...</h3>
-        <p id="potdDesc"></p>
-      </div>
-    </div>
-
-    <!-- Панель управления -->
-    <div class="toolbar">
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="search" id="searchInput" placeholder="Поиск подкастов..." aria-label="Поиск подкастов">
-      </div>
-      <button class="btn" id="randomBtn" aria-label="Случайный подкаст">🎲 Случайный</button>
-    </div>
-
-    <!-- Фильтры -->
-    <div class="filter-chips" role="group" aria-label="Фильтр по формату">
-      <span style="font-size:0.8rem;color:var(--text-muted);margin-right:4px;">Формат:</span>
-      <button class="chip active" data-filter-format="all">Все</button>
-      <button class="chip" data-filter-format="audio">🎧 Аудио</button>
-      <button class="chip" data-filter-format="video">🎬 Видео</button>
-    </div>
-
-    <div class="filter-chips" role="group" aria-label="Фильтр по темам" id="topicFilters">
-      <span style="font-size:0.8rem;color:var(--text-muted);margin-right:4px;">Темы:</span>
-    </div>
-
-    <!-- Статистика -->
-    <div class="stats-row" id="statsRow">
-      <div class="stat-card"><div class="stat-value" id="statTotal">0</div><div class="stat-label">Всего</div></div>
-      <div class="stat-card"><div class="stat-value" id="statListened">0</div><div class="stat-label">Прослушано</div></div>
-      <div class="stat-card"><div class="stat-value" id="statQueue">0</div><div class="stat-label">В очереди</div></div>
-      <div class="stat-card"><div class="stat-value" id="statFav">0</div><div class="stat-label">В избранном</div></div>
-    </div>
-
-    <!-- Значки -->
-    <div class="badges-row" id="badgesRow"></div>
-
-    <!-- Сетка подкастов -->
-    <div class="podcast-grid" id="podcastGrid"></div>
-    <div class="empty-state" id="emptyState" style="display:none;">
-      <div class="empty-icon">🔍</div>
-      <p>Ничего не найдено. Попробуйте изменить фильтры.</p>
-    </div>
-  </section>
-
-  <!-- ===== РАЗДЕЛ УЗНАТЬ БОЛЬШЕ ===== -->
-  <section class="section" id="section-learn" role="tabpanel" aria-labelledby="tab-learn">
-    <div class="warning-banner" role="alert">
-      <span class="warn-icon">⚠️</span>
-      <div><strong>18+</strong> Некоторые термины и материалы содержат описания насилия.</div>
-    </div>
-
-    <div class="learn-grid">
-      <!-- История жанра -->
-      <div class="learn-card">
-        <h3>📜 История жанра</h3>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-year">XVI век</div>
-            <div class="timeline-text">В Англии появляются первые «памфлеты о преступлениях» и «Ньюгейтский справочник» — биографии приговорённых к казни. Генри Гудкол записывает исповеди заключённых Ньюгейтской тюрьмы[reference:0].</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">1957</div>
-            <div class="timeline-text">Аргентинский журналист Родольфо Уолш публикует «Operación Masacre» — одну из первых книг в жанре документального расследования[reference:1].</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">1966</div>
-            <div class="timeline-text">Трумен Капоте публикует «Хладнокровное убийство» — эталон жанра, основанный на реальном деле об убийстве семьи Клаттеров в Канзасе[reference:2].</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">1979</div>
-            <div class="timeline-text">«Песнь палача» Нормана Мейлера становится первой книгой в жанре тру-крайм, получившей Пулитцеровскую премию[reference:3].</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2000-е</div>
-            <div class="timeline-text">В России жанр набирает популярность с развитием криминальной хроники: «Следствие вели», «Криминальная Россия»[reference:4].</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2014</div>
-            <div class="timeline-text">Выходят первые сезоны подкастов Criminal и Serial — начало бума тру-крайм подкастов[reference:5].</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2018+</div>
-            <div class="timeline-text">Русскоязычные тру-крайм подкасты становятся массовым явлением. Появляются «Дневники Лоры Палны», «У холмов есть подкаст», «Тут такое дело» и десятки других проектов[reference:6].</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Глоссарий -->
-      <div class="learn-card">
-        <h3>📖 Глоссарий терминов и сленга</h3>
-        <div class="glossary-grid" id="glossaryGrid"></div>
-      </div>
-
-      <!-- Викторина -->
-      <div class="learn-card">
-        <h3>🧠 Викторина</h3>
-        <div class="quiz-container" id="quizContainer"></div>
-        <div class="quiz-result" id="quizResult" style="display:none;"></div>
-      </div>
-
-      <!-- Книги и фильмы -->
-      <div class="learn-card">
-        <h3>📚 Книги и документальные фильмы</h3>
-        <div class="media-list">
-          <div class="media-item">
-            <span class="media-type book">Книга</span>
-            <h4>«Хладнокровное убийство»</h4>
-            <div class="media-author">Трумен Капоте, 1966</div>
-            <div class="media-desc">Эталон жанра. История убийства семьи Клаттеров в Канзасе, основанная на интервью с местными жителями и самими преступниками[reference:7].</div>
-          </div>
-          <div class="media-item">
-            <span class="media-type book">Книга</span>
-            <h4>«Песнь палача»</h4>
-            <div class="media-author">Норман Мейлер, 1979</div>
-            <div class="media-desc">Первая книга в жанре тру-крайм, получившая Пулитцеровскую премию. История Гэри Гилмора[reference:8].</div>
-          </div>
-          <div class="media-item">
-            <span class="media-type book">Книга</span>
-            <h4>«Ньюгейтский справочник»</h4>
-            <div class="media-author">XVIII–XIX вв.</div>
-            <div class="media-desc">Шеститомное издание биографий преступников, одна из «классических» книг жанра[reference:9].</div>
-          </div>
-          <div class="media-item">
-            <span class="media-type film">Фильм</span>
-            <h4>«Воспоминания об убийстве»</h4>
-            <div class="media-author">Пон Джун Хо, 2003</div>
-            <div class="media-desc">Основан на реальной истории первого серийного убийцы Южной Кореи. Фильм вдохновлён делом, которое расследовалось более 20 лет[reference:10].</div>
-          </div>
-          <div class="media-item">
-            <span class="media-type film">Фильм</span>
-            <h4>«Убийцы цветочной луны»</h4>
-            <div class="media-author">Мартин Скорсезе, 2023</div>
-            <div class="media-desc">Экранизация реальных событий 1920-х годов — серии убийств членов племени осейджей в Оклахоме. Упоминается в подкасте «У холмов есть подкаст»[reference:11].</div>
-          </div>
-          <div class="media-item">
-            <span class="media-type book">Книга</span>
-            <h4>«Настоящие монстры: истории серийных убийц»</h4>
-            <div class="media-author">Евгений, автор подкаста «Золотой жук»</div>
-            <div class="media-desc">Книга автора документального криминального подкаста «Золотой жук» о самых жутких и таинственных преступниках[reference:12].</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Этика -->
-      <div class="learn-card">
-        <h3>⚖️ Правила этики жанра</h3>
-        <ul class="ethics-list">
-          <li>
-            <strong>Уважение к пострадавшим</strong>
-            Каждое преступление — это реальная трагедия. Помните, что за каждой историей стоят живые люди, потерявшие близких. Не романтизируйте преступников и не превращайте боль в развлечение[reference:13].
-          </li>
-          <li>
-            <strong>Проверка фактов</strong>
-            Тру-крайм — документальный жанр. Прежде чем делиться историей, убедитесь в достоверности источников. Опирайтесь на материалы следствия, судебные решения и открытые данные[reference:14].
-          </li>
-          <li>
-            <strong>Право на ответ</strong>
-            Если вы выдвигаете обвинения в адрес кого-либо, дайте ему возможность ответить. Журналистская этика требует беспристрастности и нейтральности[reference:15].
-          </li>
-          <li>
-            <strong>Не навреди</strong>
-            Избегайте публикации деталей, которые могут навредить следствию или усугубить страдания пострадавших. Не вступайте в личные отношения с источниками и не давайте необдуманных обещаний[reference:16].
-          </li>
-          <li>
-            <strong>Прозрачность</strong>
-            Указывайте, откуда взята информация, и признавайте, что некоторые детали могут быть неточными. Честность перед аудиторией — основа доверия[reference:17].
-          </li>
-          <li>
-            <strong>Травма-информированный подход</strong>
-            При интервьюировании родственников жертв используйте принципы травма-информированного интервьюирования. Это помогает не причинить дополнительной боли[reference:18].
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== РАЗДЕЛ МОИ КОЛЛЕКЦИИ ===== -->
-  <section class="section" id="section-collections" role="tabpanel" aria-labelledby="tab-collections">
-    <h2 style="margin-bottom:16px;font-size:1.2rem;">📁 Мои коллекции</h2>
-    <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:20px;">Группируйте подкасты по темам, настроению или любым другим критериям. Коллекции сохраняются локально в вашем браузере.</p>
-    <div class="collections-grid" id="collectionsGrid"></div>
-  </section>
-
+<section class="section container text" id="faq" data-view="podcasts">
+  <h2>Частые вопросы</h2>
+  <details><summary>Подойдёт ли это чувствительным слушателям?</summary><div>Многие выпуски описывают насилие. Смотрите описание и предупреждения к эпизоду, а при тяжёлом самочувствии делайте паузу или выбирайте другую тему.</div></details>
+  <details><summary>Где слушать?</summary><div>Подкасты обычно выходят в Apple Podcasts, на YouTube, в Яндекс Музыке, VK, Podcast.ru и других приложениях. В карточке есть ссылка на официальную страницу или поиск по названию.</div></details>
+  <details><summary>Почему у некоторых подкастов нет прямых ссылок?</summary><div>Мы добавляем только ссылки, которые проверили. Для остальных работает поиск по названию.</div></details>
+  <details><summary>Как предложить подкаст для каталога?</summary><div>Заполните форму в разделе <a href="#suggest" style="text-decoration:underline">«Предложить подкаст»</a>: нужны название и ссылка. Мы проверим авторов и страницу и решим, добавлять ли проект.</div></details>
+  <details><summary>Каталог только на русском?</summary><div>Да, в нём русскоязычные проекты.</div></details>
+</section>
 </main>
 
-<footer class="footer">
-  Тру-Крайм Каталог — сайт создан в уважении к пострадавшим и их близким. 18+<br>
-  Все данные о подкастах взяты из открытых источников.
-</footer>
+<footer class="footer"><div class="container">© <span id="year"></span> True Crime Catalog · 18+ · Независимая подборка, не связана с авторами подкастов · <a href="#suggest" style="text-decoration:underline">Предложить подкаст</a><p class="disc">Все обложки, изображения, названия подкастов и ссылки используются исключительно в ознакомительных целях и принадлежат их правообладателям: авторам, студиям и платформам. Каталог не претендует на права на этот материал. Если вы правообладатель и хотите, чтобы материал был изменён или удалён, свяжитесь с автором сайта.</p></div></footer>
 
-<script>
-/* ===================================================================
-   ДАННЫЕ ПОДКАСТОВ (на основе реальных источников)
-   =================================================================== */
-const PODCASTS = [
-  {
-    id: 'tut-takoe-delo',
-    title: 'Тут такое дело',
-    desc: 'Классический тру-крайм с бокалом вина: ведущие Даша и Маша обсуждают страшные преступления, преступников и их жертв. Иногда — с сарказмом, всегда — с уважением к теме.',
-    topics: ['Убийства', 'Мошенничество', 'Истории'],
-    humor: 'Чёрный юмор',
-    heavy: 'Средняя тяжесть',
-    format: 'audio',
-    cover: 'tut-takoe-delo',
-    links: [
-      { label: 'Mave', url: 'https://tyttakoedelo.mave.digital' },
-      { label: 'Apple Podcasts', url: 'https://podcasts.apple.com/ru/podcast/тут-такое-дело/id1508999871' }
-    ],
-    isNew: false,
-    popular: true
-  },
-  {
-    id: 'u-holmov',
-    title: 'У холмов есть подкаст',
-    desc: 'Брат и сестра Тима и Валя Назаровы детально разбирают кейсы о настоящих преступлениях и маньяках. Фирменный чёрный юмор и более сотни выпусков.',
-    topics: ['Серийные убийцы', 'Маньяки', 'Криминал'],
-    humor: 'Чёрный юмор',
-    heavy: 'Высокая тяжесть',
-    format: 'video',
-    cover: 'u-holmov',
-    links: [
-      { label: 'Mave', url: 'https://uholmov.mave.digital' },
-      { label: 'YouTube', url: 'https://www.youtube.com/@uholmov' },
-      { label: 'Яндекс.Музыка', url: 'https://music.yandex.ru/album/11002256' }
-    ],
-    isNew: false,
-    popular: true
-  },
-  {
-    id: 'lorapalna',
-    title: 'Дневники Лоры Палны',
-    desc: 'Один из лучших и самых терапевтичных тру-крайм подкастов. Журналисты Митя Лебедев и Маша Погребняк исследуют хтонь, насилие и криминал — от серийных убийц до аферистов.',
-    topics: ['Серийные убийцы', 'Группировки', 'Аферисты'],
-    humor: 'Есть юмор',
-    heavy: 'Высокая тяжесть',
-    format: 'video',
-    cover: 'lorapalna',
-    links: [
-      { label: 'Apple Podcasts', url: 'https://podcasts.apple.com/ru/podcast/дневники-лоры-палны/id1505527741' },
-      { label: 'YouTube', url: 'https://www.youtube.com/@lorapalna.terminvox' }
-    ],
-    isNew: false,
-    popular: true
-  },
-  {
-    id: 'krasnoy-kraskoy',
-    title: 'Красной краской',
-    desc: 'Тру-крайм о том, как преступления вдохновляли творцов. Ведущий — журналист Владимир Раевский. Совместный проект Синхронизации и студии «Шторм».',
-    topics: ['Искусство', 'Преступления', 'История'],
-    humor: 'Без юмора',
-    heavy: 'Средняя тяжесть',
-    format: 'audio',
-    cover: 'krasnoy-kraskoy',
-    links: [
-      { label: 'Telegram', url: 'https://t.me/krasnoykraskoy' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'zolotoy-zhuk',
-    title: 'Золотой жук',
-    desc: 'Документальный криминальный подкаст о самых интересных, жутких и таинственных преступниках и преступлениях прошлого и современности. Ведущий — Евгений.',
-    topics: ['История', 'Серийные убийцы', 'Загадки'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'video',
-    cover: 'zolotoy-zhuk',
-    links: [
-      { label: 'YouTube', url: 'https://www.youtube.com/@GoldenBugPod' },
-      { label: 'Яндекс.Музыка', url: 'https://music.yandex.ru/album/13435359' },
-      { label: 'Apple Podcasts', url: 'https://podcasts.apple.com/ru/podcast/золотой-жук/id1548194990' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'po-krovavomu',
-    title: 'По кровавому шлейфу',
-    desc: 'Неторопливое обсуждение преступлений, вызывающих «табун ледяных мурашек». Ведущий — Силуян Космос. Некоторые эпизоды выходят в видеоформате.',
-    topics: ['Убийства', 'Тайны', 'Расследования'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'video',
-    cover: 'po-krovavomu',
-    links: [
-      { label: 'YouTube', url: 'https://www.youtube.com/@po_krovavomu_shleifu' },
-      { label: 'RuTube', url: 'https://rutube.ru/channel/78792382' },
-      { label: 'VK Видео', url: 'https://vkvideo.ru/@po_krovavomu_shleifu' }
-    ],
-    isNew: true,
-    popular: false
-  },
-  {
-    id: 'truecrime-mave',
-    title: 'Тру Крайм',
-    desc: 'Истории настоящих преступлений спокойным голосом. Подкаст о преступлениях со всего мира — от необычных до шокирующих.',
-    topics: ['Убийства', 'Расследования', 'Мировые дела'],
-    humor: 'Без юмора',
-    heavy: 'Средняя тяжесть',
-    format: 'audio',
-    cover: 'truecrime-mave',
-    links: [
-      { label: 'Mave', url: 'https://truecr1me.mave.digital' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'nenastoyashiy',
-    title: 'Ненастоящий детектив',
-    desc: 'Ведущий Руслан рассказывает о серийных и массовых убийцах, загадочных смертях и исчезновениях. Например, о «шаболовском душегубе» Василии Комарове.',
-    topics: ['Серийные убийцы', 'Исчезновения', 'История'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'audio',
-    cover: 'nenastoyashiy',
-    links: [
-      { label: 'Mave', url: 'https://nottruedetective.mave.digital' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'trassa-161',
-    title: 'Трасса 161',
-    desc: 'Криминальный подкаст «Холода». Каждый сезон посвящён преступлению, совершённому в одном из регионов России.',
-    topics: ['Регионы России', 'Расследования', 'Криминал'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'audio',
-    cover: 'trassa-161',
-    links: [
-      { label: 'Яндекс.Музыка', url: 'https://music.yandex.ru/album/8166480' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'chernichnyi',
-    title: 'Черничный подкаст',
-    desc: 'Маруся Черничкина читает страшные истории своих подписчиков. Атмосферный подкаст в жанре true crime и society & culture.',
-    topics: ['Истории подписчиков', 'Мистика', 'Криминал'],
-    humor: 'Без юмора',
-    heavy: 'Средняя тяжесть',
-    format: 'audio',
-    cover: 'chernichnyi',
-    links: [
-      { label: 'Podcast Republic', url: 'https://podcastrepublic.net/podcast/1591791650' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'dela',
-    title: 'Дела',
-    desc: 'Криминальный подкаст от LABELSMART, в котором исследуются реальные преступления и люди, связанные с преступными событиями и затронутые ими.',
-    topics: ['Криминал', 'Расследования', 'Судьбы'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'audio',
-    cover: 'dela',
-    links: [
-      { label: 'Apple Podcasts', url: 'https://podcasts.apple.com/ru/podcast/дела/id1546714849' }
-    ],
-    isNew: false,
-    popular: true
-  },
-  {
-    id: 'kokteil',
-    title: 'Коктейль «Тру Крайм»',
-    desc: 'Елена Шапетько рассказывает необычные, малоизвестные истории о преступлениях, исчезновениях, их расследованиях и судебных делах. «В нашем бокале всегда полный микс из предательства и человеческих страстей».',
-    topics: ['Исчезновения', 'Судебные дела', 'Малоизвестное'],
-    humor: 'Без юмора',
-    heavy: 'Средняя тяжесть',
-    format: 'audio',
-    cover: 'kokteil',
-    links: [
-      { label: 'Apple Podcasts', url: 'https://podcasts.apple.com/ru/podcast/коктейль-тру-крайм/id1591791650' }
-    ],
-    isNew: false,
-    popular: false
-  },
-  {
-    id: 'radio-kriminal',
-    title: 'Радио Криминал',
-    desc: 'Подкаст о реальных уголовных делах СССР и России. Дела, о которых молчали десятилетия, расследования, которые изменили систему. Каждый выпуск основан на документах и архивах.',
-    topics: ['СССР', 'Россия', 'Архивы'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'audio',
-    cover: 'radio-kriminal',
-    links: [
-      { label: 'ЛитРес', url: 'https://www.litres.ru/podcast/radio-kriminal/' }
-    ],
-    isNew: true,
-    popular: false
-  },
-  {
-    id: 'hrupkie',
-    title: 'Хрупкие создания',
-    desc: 'Концептуальный тру-крайм подкаст о женщинах и для женщин. Две подруги — театральный режиссёр и музейный работник — обсуждают судьбы уголовниц и детали их преступлений.',
-    topics: ['Женщины-преступницы', 'История', 'Культура'],
-    humor: 'Есть юмор',
-    heavy: 'Средняя тяжесть',
-    format: 'audio',
-    cover: 'hrupkie',
-    links: [
-      { label: 'Apple Podcasts', url: 'https://podcasts.apple.com/ru/podcast/хрупкие-создания/id1591791650' }
-    ],
-    isNew: true,
-    popular: false
-  },
-  {
-    id: 'uliki',
-    title: 'Улики на ушко',
-    desc: 'Алёна и Таня погружаются в преступления с головой. Жуткие и увлекательные дела, подробная реконструкция событий, неожиданные повороты.',
-    topics: ['Реконструкция', 'Расследования', 'Детали'],
-    humor: 'Без юмора',
-    heavy: 'Высокая тяжесть',
-    format: 'audio',
-    cover: 'uliki',
-    links: [
-      { label: 'Telegram', url: 'https://t.me/ulikinaushko' }
-    ],
-    isNew: false,
-    popular: false
-  }
-];
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle"><div class="mbox" id="mbox"></div></div>
 
-/* ===================================================================
-   ГЛОССАРИЙ
-   =================================================================== */
-const GLOSSARY = [
-  { term: 'Тру-крайм', def: 'Жанр документального кино, подкастов и литературы, посвящённый реальным преступлениям и их расследованию.', icon: 'truecrime' },
-  { term: 'Маньяк', def: 'Человек, совершающий серийные убийства или насильственные действия с особой жестокостью.', icon: 'serial' },
-  { term: 'Профайлер', def: 'Специалист по составлению психологического портрета преступника на основе анализа места преступления.', icon: 'profil' },
-  { term: 'Криминалист', def: 'Специалист, применяющий научные методы для сбора и анализа доказательств.', icon: 'forensic' },
-  { term: 'Дактилоскопия', def: 'Метод идентификации личности по отпечаткам пальцев.', icon: 'fingerprint' },
-  { term: 'Баллистика', def: 'Раздел криминалистики, изучающий огнестрельное оружие и следы его применения.', icon: 'ballistic' },
-  { term: 'Алиби', def: 'Доказательство того, что подозреваемый находился в другом месте в момент совершения преступления.', icon: 'alibi' },
-  { term: 'Холодное дело', def: 'Незакрытое уголовное дело, расследование которого приостановлено на длительный срок.', icon: 'coldcase' },
-  { term: 'Серийный убийца', def: 'Преступник, совершивший три и более убийства с временными промежутками.', icon: 'serial2' },
-  { term: 'Ангел смерти', def: 'Медицинский работник или опекун, убивающий пациентов или подопечных, часто из «милосердия».', icon: 'angel' },
-  { term: 'Копикэт', def: 'Преступник, имитирующий действия известного серийного убийцы.', icon: 'copycat' },
-  { term: 'Модус операнди', def: 'Характерный способ совершения преступления, «почерк» преступника.', icon: 'modus' },
-  { term: 'Виктимология', def: 'Раздел криминологии, изучающий жертв преступлений и их поведение.', icon: 'victim' },
-  { term: 'Газлайтинг', def: 'Форма психологического насилия, при которой жертву заставляют сомневаться в собственной реальности.', icon: 'gaslight' },
-  { term: 'Криминальный профайлинг', def: 'Метод составления психологического портрета неизвестного преступника по косвенным признакам.', icon: 'profiling' },
-  { term: 'Танатология', def: 'Наука о смерти, изучающая процессы умирания и посмертные изменения.', icon: 'thanatology' }
-];
 
-/* ===================================================================
-   ВИКТОРИНА
-   =================================================================== */
-const QUIZ = [
-  {
-    question: 'Какая книга считается первым образцом тру-крайма в современном понимании?',
-    options: ['«Хладнокровное убийство» Трумена Капоте', '«Песнь палача» Нормана Мейлера', '«Ньюгейтский справочник»', '«Тру-детектив» журнал'],
-    correct: 0
-  },
-  {
-    question: 'В каком веке появились первые «памфлеты о преступлениях» в Англии?',
-    options: ['XIV век', 'XVI век', 'XVIII век', 'XX век'],
-    correct: 1
-  },
-  {
-    question: 'Кто из перечисленных получил Пулитцеровскую премию за книгу в жанре тру-крайм?',
-    options: ['Трумен Капоте', 'Норман Мейлер', 'Родольфо Уолш', 'Генри Гудкол'],
-    correct: 1
-  },
-  {
-    question: 'Что такое «холодное дело» в криминалистике?',
-    options: ['Дело, закрытое за отсутствием доказательств', 'Незакрытое дело, расследование которого приостановлено', 'Дело, переданное в архив', 'Дело, расследуемое повторно'],
-    correct: 1
-  },
-  {
-    question: 'Какой принцип этики тру-крайм требует давать возможность ответить обвиняемому?',
-    options: ['Прозрачность', 'Право на ответ', 'Проверка фактов', 'Уважение к пострадавшим'],
-    correct: 1
-  },
-  {
-    question: 'Кто такой «профайлер»?',
-    options: ['Следователь, ведущий допрос', 'Специалист по психологическому портрету преступника', 'Криминалист-баллистик', 'Судмедэксперт'],
-    correct: 1
-  },
-  {
-    question: 'Что означает термин «копикэт»?',
-    options: ['Преступник, имитирующий известного убийцу', 'Криминалист, копирующий улики', 'Подражатель в искусстве', 'Свидетель, дающий ложные показания'],
-    correct: 0
-  },
-  {
-    question: 'В каком году вышел подкаст Serial, положивший начало буму тру-крайм подкастов?',
-    options: ['2012', '2014', '2016', '2018'],
-    correct: 1
-  }
-];
 
-/* ===================================================================
-   СОСТОЯНИЕ (localStorage)
-   =================================================================== */
-const STORAGE_KEY = 'truecrime_catalog_state';
 
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch (e) { /* ignore */ }
-  return { favorites: [], listened: [], queue: [], collections: [] };
-}
-
-function saveState(state) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch (e) { /* ignore */ }
-}
-
-let appState = loadState();
-
-/* ===================================================================
-   УТИЛИТЫ
-   =================================================================== */
-function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-}
-
-function formatDate() {
-  const d = new Date();
-  return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
-}
-
-/* ===================================================================
-   SVG-ОБЛОЖКИ
-   =================================================================== */
-function createCoverSVG(id, title) {
-  const colors = {
-    'tut-takoe-delo': ['#c41e3a', '#8b0000'],
-    'u-holmov': ['#2c3e50', '#1a252f'],
-    'lorapalna': ['#8e44ad', '#4a235a'],
-    'krasnoy-kraskoy': ['#c0392b', '#7b241c'],
-    'zolotoy-zhuk': ['#b8860b', '#6b4c00'],
-    'po-krovavomu': ['#c41e3a', '#2c0a0a'],
-    'truecrime-mave': ['#2c3e50', '#1a1a2e'],
-    'nenastoyashiy': ['#34495e', '#1a1a2e'],
-    'trassa-161': ['#2c3e50', '#0d0d0d'],
-    'chernichnyi': ['#4a235a', '#2c0a3a'],
-    'dela': ['#c0392b', '#1a1a1a'],
-    'kokteil': ['#e74c3c', '#922b21'],
-    'radio-kriminal': ['#1a1a2e', '#0d0d0d'],
-    'hrupkie': ['#9b59b6', '#4a235a'],
-    'uliki': ['#c41e3a', '#2c0a0a'],
-    'default': ['#555', '#222']
-  };
-  const [c1, c2] = colors[id] || colors.default;
-  const letter = title.charAt(0).toUpperCase();
-
-  return `<svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Обложка подкаста ${title}">
-    <defs>
-      <linearGradient id="grad-${id}" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:${c1};stop-opacity:1" />
-        <stop offset="100%" style="stop-color:${c2};stop-opacity:1" />
-      </linearGradient>
-      <pattern id="pat-${id}" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-        <circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.06)" />
-      </pattern>
-    </defs>
-    <rect width="320" height="180" fill="url(#grad-${id})" />
-    <rect width="320" height="180" fill="url(#pat-${id})" />
-    <text x="160" y="95" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="48" font-weight="800" fill="rgba(255,255,255,0.15)">${letter}</text>
-    <text x="160" y="140" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" font-weight="600" fill="rgba(255,255,255,0.5)" letter-spacing="2">TRUE CRIME</text>
-  </svg>`;
-}
-
-/* ===================================================================
-   SVG-ИКОНКИ ГЛОССАРИЯ
-   =================================================================== */
-function createGlossaryIcon(type) {
-  const icons = {
-    truecrime: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#c41e3a" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🔍</text></svg>`,
-    serial: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#c41e3a" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🕵️</text></svg>`,
-    profil: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#3498db" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🧠</text></svg>`,
-    forensic: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#2ecc71" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🔬</text></svg>`,
-    fingerprint: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#9b59b6" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🖐️</text></svg>`,
-    ballistic: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#e67e22" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🎯</text></svg>`,
-    alibi: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#1abc9c" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">📋</text></svg>`,
-    coldcase: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#3498db" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">❄️</text></svg>`,
-    serial2: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#c41e3a" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">⚰️</text></svg>`,
-    angel: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#f39c12" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">😇</text></svg>`,
-    copycat: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#e74c3c" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🔄</text></svg>`,
-    modus: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#8e44ad" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">📝</text></svg>`,
-    victim: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#e74c3c" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🕊️</text></svg>`,
-    gaslight: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#f39c12" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">💡</text></svg>`,
-    profiling: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#2ecc71" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">📊</text></svg>`,
-    thanatology: `<svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><rect width="44" height="44" rx="8" fill="#34495e" opacity="0.15"/><text x="22" y="28" text-anchor="middle" font-size="18">🦋</text></svg>`
-  };
-  return icons[type] || icons.truecrime;
-}
-
-/* ===================================================================
-   РЕНДЕРИНГ ПОДКАСТОВ
-   =================================================================== */
-let currentFormatFilter = 'all';
-let currentTopicFilter = 'all';
-let currentSearch = '';
-
-function getUniqueTopics() {
-  const set = new Set();
-  PODCASTS.forEach(p => p.topics.forEach(t => set.add(t)));
-  return [...set].sort();
-}
-
-function renderTopicFilters() {
-  const container = document.getElementById('topicFilters');
-  const topics = getUniqueTopics();
-  let html = `<span style="font-size:0.8rem;color:var(--text-muted);margin-right:4px;">Темы:</span>`;
-  html += `<button class="chip active" data-filter-topic="all">Все</button>`;
-  topics.forEach(t => {
-    html += `<button class="chip" data-filter-topic="${t}">${t}</button>`;
-  });
-  container.innerHTML = html;
-
-  container.querySelectorAll('.chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      container.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentTopicFilter = btn.dataset.filterTopic;
-      renderPodcasts();
-    });
-  });
-}
-
-function getFilteredPodcasts() {
-  return PODCASTS.filter(p => {
-    if (currentFormatFilter !== 'all' && p.format !== currentFormatFilter) return false;
-    if (currentTopicFilter !== 'all' && !p.topics.includes(currentTopicFilter)) return false;
-    if (currentSearch) {
-      const q = currentSearch.toLowerCase();
-      const inTitle = p.title.toLowerCase().includes(q);
-      const inDesc = p.desc.toLowerCase().includes(q);
-      const inTopics = p.topics.some(t => t.toLowerCase().includes(q));
-      if (!inTitle && !inDesc && !inTopics) return false;
-    }
-    return true;
-  });
-}
-
-function renderPodcasts() {
-  const grid = document.getElementById('podcastGrid');
-  const empty = document.getElementById('emptyState');
-  const filtered = getFilteredPodcasts();
-
-  if (filtered.length === 0) {
-    grid.innerHTML = '';
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
-
-  grid.innerHTML = filtered.map(p => {
-    const isFav = appState.favorites.includes(p.id);
-    const isListened = appState.listened.includes(p.id);
-    const isQueued = appState.queue.includes(p.id);
-
-    const humorClass = p.humor === 'Чёрный юмор' ? 'meta-humor' : '';
-    const heavyClass = p.heavy.includes('Высокая') ? 'meta-heavy' : '';
-
-    const coverSVG = createCoverSVG(p.cover, p.title);
-
-    const linksHTML = p.links.map(l =>
-      `<a href="${l.url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${l.label} ↗</a>`
-    ).join('');
-
-    const topicsHTML = p.topics.map(t => `<span class="topic-tag">${t}</span>`).join('');
-
-    return `<article class="podcast-card" tabindex="0" role="article" aria-label="${p.title}" data-id="${p.id}">
-      <div class="card-cover">
-        ${coverSVG}
-        <div class="card-badges">
-          ${p.isNew ? '<span class="badge-tag badge-new">Новое</span>' : ''}
-          ${p.popular ? '<span class="badge-tag badge-popular">Популярное</span>' : ''}
-        </div>
-        <div class="card-actions-top">
-          <button class="card-action-btn ${isFav ? 'active' : ''}" data-action="fav" data-id="${p.id}" aria-label="${isFav ? 'Убрать из избранного' : 'В избранное'}" title="Избранное">${isFav ? '❤️' : '🤍'}</button>
-          <button class="card-action-btn ${isListened ? 'active' : ''}" data-action="listened" data-id="${p.id}" aria-label="${isListened ? 'Отменить прослушано' : 'Отметить прослушано'}" title="Прослушано">${isListened ? '✅' : '⭕'}</button>
-          <button class="card-action-btn ${isQueued ? 'active' : ''}" data-action="queue" data-id="${p.id}" aria-label="${isQueued ? 'Убрать из очереди' : 'В очередь'}" title="Хочу послушать">${isQueued ? '🔖' : '📑'}</button>
-        </div>
-      </div>
-      <div class="card-body">
-        <h3 class="card-title">${p.title}</h3>
-        <p class="card-desc">${p.desc}</p>
-        <div class="card-topics">${topicsHTML}</div>
-        <div class="card-meta">
-          <span class="meta-tag ${humorClass}">${p.humor}</span>
-          <span class="meta-tag ${heavyClass}">${p.heavy}</span>
-          <span class="meta-tag meta-format">${p.format === 'audio' ? '🎧 Аудио' : '🎬 Видео'}</span>
-        </div>
-        <div class="card-links">${linksHTML}</div>
-      </div>
-    </article>`;
-  }).join('');
-
-  // Обработчики действий
-  grid.querySelectorAll('[data-action]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const id = btn.dataset.id;
-      const action = btn.dataset.action;
-      toggleAction(action, id);
-    });
-  });
-}
-
-function toggleAction(action, id) {
-  if (action === 'fav') {
-    if (appState.favorites.includes(id)) {
-      appState.favorites = appState.favorites.filter(x => x !== id);
-    } else {
-      appState.favorites.push(id);
-    }
-  } else if (action === 'listened') {
-    if (appState.listened.includes(id)) {
-      appState.listened = appState.listened.filter(x => x !== id);
-    } else {
-      appState.listened.push(id);
-    }
-  } else if (action === 'queue') {
-    if (appState.queue.includes(id)) {
-      appState.queue = appState.queue.filter(x => x !== id);
-    } else {
-      appState.queue.push(id);
-    }
-  }
-  saveState(appState);
-  renderPodcasts();
-  renderStats();
-  renderBadges();
-}
-
-/* ===================================================================
-   СТАТИСТИКА И ЗНАЧКИ
-   =================================================================== */
-function renderStats() {
-  document.getElementById('statTotal').textContent = PODCASTS.length;
-  document.getElementById('statListened').textContent = appState.listened.length;
-  document.getElementById('statQueue').textContent = appState.queue.length;
-  document.getElementById('statFav').textContent = appState.favorites.length;
-}
-
-function renderBadges() {
-  const badges = [
-    { id: 'first_listen', label: 'Первый шаг', emoji: '🎧', desc: 'Отметить первый подкаст прослушанным', check: () => appState.listened.length >= 1 },
-    { id: 'five_listen', label: 'Слушатель', emoji: '🎶', desc: 'Отметить 5 подкастов прослушанными', check: () => appState.listened.length >= 5 },
-    { id: 'ten_listen', label: 'Марафонец', emoji: '🏃', desc: 'Отметить 10 подкастов прослушанными', check: () => appState.listened.length >= 10 },
-    { id: 'all_listen', label: 'Знаток', emoji: '🧠', desc: 'Прослушать все подкасты', check: () => appState.listened.length >= PODCASTS.length },
-    { id: 'first_fav', label: 'Коллекционер', emoji: '⭐', desc: 'Добавить первый подкаст в избранное', check: () => appState.favorites.length >= 1 },
-    { id: 'five_fav', label: 'Гурман', emoji: '🌟', desc: 'Добавить 5 подкастов в избранное', check: () => appState.favorites.length >= 5 },
-    { id: 'first_queue', label: 'Планировщик', emoji: '📋', desc: 'Добавить подкаст в очередь', check: () => appState.queue.length >= 1 },
-    { id: 'five_queue', label: 'Очередь', emoji: '📚', desc: 'Держать 5 подкастов в очереди', check: () => appState.queue.length >= 5 }
-  ];
-
-  const container = document.getElementById('badgesRow');
-  container.innerHTML = badges.map(b => {
-    const earned = b.check();
-    return `<div class="badge-item ${earned ? 'earned' : ''}" title="${b.desc}">
-      <span class="badge-emoji">${b.emoji}</span>
-      <span>${b.label}</span>
-    </div>`;
-  }).join('');
-}
-
-/* ===================================================================
-   ПОДКАСТ ДНЯ
-   =================================================================== */
-function renderPodcastOfDay() {
-  const dayIndex = new Date().getDate() % PODCASTS.length;
-  const p = PODCASTS[dayIndex];
-  document.getElementById('potdTitle').textContent = p.title;
-  document.getElementById('potdDesc').textContent = p.desc.slice(0, 120) + '...';
-}
-
-/* ===================================================================
-   СЛУЧАЙНЫЙ ПОДКАСТ
-   =================================================================== */
-function randomPodcast() {
-  const filtered = getFilteredPodcasts();
-  if (filtered.length === 0) return;
-  const p = filtered[Math.floor(Math.random() * filtered.length)];
-  showModal(p.title, `
-    <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:12px;">${p.desc}</p>
-    <div style="margin-bottom:12px;">${p.topics.map(t => `<span class="topic-tag" style="margin-right:4px;">${t}</span>`).join('')}</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      ${p.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn btn-sm">${l.label} ↗</a>`).join('')}
-    </div>
-  `);
-}
-
-/* ===================================================================
-   ГЛОССАРИЙ
-   =================================================================== */
-function renderGlossary() {
-  const container = document.getElementById('glossaryGrid');
-  container.innerHTML = GLOSSARY.map(g => `
-    <div class="glossary-item" tabindex="0">
-      <div class="glossary-icon">${createGlossaryIcon(g.icon)}</div>
-      <div>
-        <div class="glossary-term">${g.term}</div>
-        <div class="glossary-def">${g.def}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-/* ===================================================================
-   ВИКТОРИНА
-   =================================================================== */
-let quizAnswered = 0;
-let quizCorrect = 0;
-
-function renderQuiz() {
-  const container = document.getElementById('quizContainer');
-  quizAnswered = 0;
-  quizCorrect = 0;
-  document.getElementById('quizResult').style.display = 'none';
-
-  container.innerHTML = QUIZ.map((q, qi) => `
-    <div class="quiz-question" data-q="${qi}">
-      <p>${qi + 1}. ${q.question}</p>
-      <div class="quiz-options">
-        ${q.options.map((opt, oi) => `
-          <button class="quiz-option" data-q="${qi}" data-o="${oi}">${opt}</button>
-        `).join('')}
-      </div>
-    </div>
-  `).join('');
-
-  container.querySelectorAll('.quiz-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const qi = parseInt(btn.dataset.q);
-      const oi = parseInt(btn.dataset.o);
-      const q = QUIZ[qi];
-      const questionEl = container.querySelector(`.quiz-question[data-q="${qi}"]`);
-
-      if (questionEl.dataset.answered === 'true') return;
-      questionEl.dataset.answered = 'true';
-
-      const allBtns = questionEl.querySelectorAll('.quiz-option');
-      allBtns.forEach(b => b.disabled = true);
-
-      if (oi === q.correct) {
-        btn.classList.add('correct');
-        quizCorrect++;
-      } else {
-        btn.classList.add('wrong');
-        allBtns[q.correct].classList.add('correct');
-      }
-      quizAnswered++;
-
-      if (quizAnswered === QUIZ.length) {
-        const result = document.getElementById('quizResult');
-        result.style.display = 'block';
-        const pct = Math.round((quizCorrect / QUIZ.length) * 100);
-        let msg = '';
-        if (pct >= 80) msg = '🏆 Отлично! Вы настоящий знаток жанра.';
-        else if (pct >= 50) msg = '👍 Неплохо! Есть куда расти.';
-        else msg = '📖 Стоит перечитать раздел «История жанра».';
-        result.innerHTML = `<div style="font-size:1.1rem;margin-bottom:8px;">Результат: ${quizCorrect} из ${QUIZ.length} (${pct}%)</div><div style="font-size:0.9rem;color:var(--text-secondary);">${msg}</div>`;
-      }
-    });
-  });
-}
-
-/* ===================================================================
-   КОЛЛЕКЦИИ
-   =================================================================== */
-function renderCollections() {
-  const container = document.getElementById('collectionsGrid');
-  const defaultCollections = [
-    { id: 'favorites', name: '❤️ Избранное', desc: 'Подкасты, которые вам понравились', filter: (p) => appState.favorites.includes(p.id) },
-    { id: 'listened', name: '✅ Прослушано', desc: 'Уже прослушанные подкасты', filter: (p) => appState.listened.includes(p.id) },
-    { id: 'queue', name: '📑 Хочу послушать', desc: 'Очередь на прослушивание', filter: (p) => appState.queue.includes(p.id) },
-    { id: 'audio', name: '🎧 Только аудио', desc: 'Аудиоподкасты', filter: (p) => p.format === 'audio' },
-    { id: 'video', name: '🎬 Только видео', desc: 'Видеоподкасты', filter: (p) => p.format === 'video' },
-    { id: 'humor', name: '😄 С юмором', desc: 'Подкасты с чёрным юмором', filter: (p) => p.humor.includes('юмор') && !p.humor.includes('Без') },
-    { id: 'heavy', name: '⚠️ Высокая тяжесть', desc: 'Самые тяжёлые темы', filter: (p) => p.heavy.includes('Высокая') },
-    { id: 'new', name: '🆕 Новое', desc: 'Недавно добавленные', filter: (p) => p.isNew }
-  ];
-
-  // Пользовательские коллекции
-  const customCollections = appState.collections || [];
-
-  const allCollections = [...defaultCollections, ...customCollections];
-
-  container.innerHTML = allCollections.map(c => {
-    const count = PODCASTS.filter(c.filter).length;
-    return `<div class="collection-card" tabindex="0" data-collection="${c.id}">
-      <h4>${c.name}</h4>
-      <p>${c.desc}</p>
-      <span class="collection-count">${count} подкастов</span>
-    </div>`;
-  }).join('');
-
-  container.querySelectorAll('.collection-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const colId = card.dataset.collection;
-      const col = allCollections.find(c => c.id === colId);
-      if (!col) return;
-      const podcasts = PODCASTS.filter(col.filter);
-      if (podcasts.length === 0) {
-        showModal(col.name, '<p style="color:var(--text-secondary);">В этой коллекции пока нет подкастов.</p>');
-        return;
-      }
-      showModal(col.name, podcasts.map(p =>
-        `<div style="padding:8px 0;border-bottom:1px solid var(--border);">
-          <strong style="font-size:0.9rem;">${p.title}</strong>
-          <div style="font-size:0.78rem;color:var(--text-secondary);margin-top:2px;">${p.topics.join(' · ')}</div>
-        </div>`
-      ).join(''));
-    });
-  });
-}
-
-/* ===================================================================
-   МОДАЛЬНОЕ ОКНО
-   =================================================================== */
-function showModal(title, bodyHTML) {
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalBody').innerHTML = bodyHTML;
-  document.getElementById('modalOverlay').classList.add('open');
-  document.getElementById('modalClose').focus();
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-}
-
-/* ===================================================================
-   НАВИГАЦИЯ ПО РАЗДЕЛАМ
-   =================================================================== */
-function switchSection(sectionId) {
-  document.querySelectorAll('.nav-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.section === sectionId);
-    t.setAttribute('aria-selected', t.dataset.section === sectionId);
-  });
-  document.querySelectorAll('.section').forEach(s => {
-    s.classList.toggle('active', s.id === `section-${sectionId}`);
-  });
-  if (sectionId === 'collections') renderCollections();
-}
-
-/* ===================================================================
-   ТЕМА
-   =================================================================== */
-function initTheme() {
-  const saved = localStorage.getItem('truecrime_theme');
-  if (saved === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-    document.getElementById('themeToggle').textContent = '☀️';
-  }
-}
-
-function toggleTheme() {
-  const html = document.documentElement;
-  const isDark = html.getAttribute('data-theme') !== 'light';
-  if (isDark) {
-    html.setAttribute('data-theme', 'light');
-    document.getElementById('themeToggle').textContent = '☀️';
-    localStorage.setItem('truecrime_theme', 'light');
-  } else {
-    html.setAttribute('data-theme', 'dark');
-    document.getElementById('themeToggle').textContent = '🌙';
-    localStorage.setItem('truecrime_theme', 'dark');
-  }
-}
-
-/* ===================================================================
-   ИНИЦИАЛИЗАЦИЯ
-   =================================================================== */
-function init() {
-  initTheme();
-
-  // Навигация
-  document.querySelectorAll('.nav-tab').forEach(tab => {
-    tab.addEventListener('click', () => switchSection(tab.dataset.section));
-  });
-
-  // Тема
-  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-
-  // Поиск
-  let searchTimeout;
-  document.getElementById('searchInput').addEventListener('input', (e) => {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => {
-      currentSearch = e.target.value.trim();
-      renderPodcasts();
-    }, 250);
-  });
-
-  // Случайный
-  document.getElementById('randomBtn').addEventListener('click', randomPodcast);
-
-  // Фильтр формата
-  document.querySelectorAll('[data-filter-format]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-filter-format]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFormatFilter = btn.dataset.filterFormat;
-      renderPodcasts();
-    });
-  });
-
-  // Модальное окно
-  document.getElementById('modalClose').addEventListener('click', closeModal);
-  document.getElementById('modalOverlay').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // Рендеринг
-  renderTopicFilters();
-  renderPodcastOfDay();
-  renderPodcasts();
-  renderStats();
-  renderBadges();
-  renderGlossary();
-  renderQuiz();
-  renderCollections();
-
-  // Горячие клавиши
-  document.addEventListener('keydown', (e) => {
-    // Ctrl+K / Cmd+K — фокус на поиск
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-      e.preventDefault();
-      document.getElementById('searchInput').focus();
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', init);
-</script>
+  <script src="main.js"></script>
 </body>
 </html>
