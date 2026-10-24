@@ -1251,3 +1251,21 @@ $('resetAll').addEventListener('click', () => {
     }, 1300);
   }
 })();
+
+/* ── Кнопка «Наверх» ── */
+(() => {
+  const toTop = document.getElementById('toTop');
+  if (!toTop) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const update = () => toTop.classList.toggle('show', window.scrollY > 600);
+  let ticking = false;
+  addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; update(); });
+  }, { passive: true });
+  update();
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, left: 0, behavior: reduced ? 'auto' : 'smooth' });
+  });
+})();
