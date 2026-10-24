@@ -711,3 +711,23 @@ body.view-anim section[data-view]{animation:viewIn .5s cubic-bezier(.2,.8,.2,1) 
 .sg-st{margin:0;font-size:.86rem;color:var(--mu);min-height:1.2em}
 .sg-priv{margin:0;font-size:.8rem;color:var(--mu)}
 .tl-sub{margin-top:36px}
+
+/* ─── Кнопка «Наверх» ─── */
+.to-top{
+  position:fixed;right:18px;
+  /* поднята выше круглой кнопки фонарика .fl-fab (низ 18px, высота 42px), чтобы не перекрывать её */
+  bottom:calc(18px + 42px + 16px + env(safe-area-inset-bottom,0px));
+  z-index:90;
+  width:44px;height:44px;padding:0;border:0;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;
+  background:var(--ac);color:#fff;
+  box-shadow:0 6px 20px rgba(0,0,0,.35);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity var(--t),transform var(--t),visibility var(--t),background var(--t),box-shadow var(--t);
+}
+.to-top svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+@media(hover:hover){
+  .to-top:hover{transform:translateY(-3px);background:#f04552;box-shadow:0 10px 26px rgba(0,0,0,.45)}
+}
+[data-theme=light] .to-top{background:var(--ac)}
