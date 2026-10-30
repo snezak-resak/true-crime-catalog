@@ -1,0 +1,62 @@
+# Workflow автоматической публикации сайта True Crime Catalog на GitHub Pages.
+# Файл лежит в репозитории по пути: .github/workflows/deploy.yml
+
+name: Deploy static site   # название workflow (видно на вкладке Actions)
+
+# Триггеры: при каждом push в main и вручную (кнопка Run workflow на вкладке Actions)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+# Права доступа, необходимые для публикации на GitHub Pages
+permissions:
+  contents: read     # чтение файлов репозитория
+  pages: write       # разрешение на публикацию в Pages
+  id-token: write    # OIDC-токен для подтверждения деплоя
+
+# Если подряд идут два push, старый запуск отменяется, публикуется только последний
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  # Задание 1. Проверка качества: линтер HTML (индивидуальный проект)
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Скопировать файлы репозитория на виртуальную машину
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Проверить HTML-разметку скриптом scripts/check_html.py
+      - name: Check HTML
+        run: python3 scripts/check_html.py
+
+  # Задание 2. Сборка и публикация. Запускается только если lint прошёл успешно
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      # ссылка на опубликованный сайт появится в сводке запуска
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # Шаг 1. Скопировать файлы репозитория на виртуальную машину
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Шаг 2. Подготовить окружение GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Шаг 3. Упаковать файлы сайта в артефакт (path: '.' = весь проект)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      # Шаг 4. Опубликовать артефакт на GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
