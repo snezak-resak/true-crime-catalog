@@ -7,7 +7,6 @@ name: Deploy static site   # название workflow (видно на вкла
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 # Права доступа, необходимые для публикации на GitHub Pages
 permissions:
@@ -15,10 +14,6 @@ permissions:
   pages: write       # разрешение на публикацию в Pages
   id-token: write    # OIDC-токен для подтверждения деплоя
 
-# Если подряд идут два push, старый запуск отменяется, публикуется только последний
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
   # Сборка и публикация сайта
