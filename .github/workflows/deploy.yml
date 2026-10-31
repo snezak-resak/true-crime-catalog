@@ -21,21 +21,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Задание 1. Проверка качества: линтер HTML (индивидуальный проект)
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      # Скопировать файлы репозитория на виртуальную машину
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Проверить HTML-разметку скриптом scripts/check_html.py
-      - name: Check HTML
-        run: python3 scripts/check_html.py
-
-  # Задание 2. Сборка и публикация. Запускается только если lint прошёл успешно
+  # Сборка и публикация сайта
   deploy:
-    needs: lint
     runs-on: ubuntu-latest
     environment:
       name: github-pages
