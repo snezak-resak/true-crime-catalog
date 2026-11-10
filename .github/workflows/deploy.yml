@@ -7,6 +7,9 @@ name: Deploy static site   # название workflow (видно на вкла
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'   # правка только README не запускает публикацию
+  workflow_dispatch:
 
 # Права доступа, необходимые для публикации на GitHub Pages
 permissions:
@@ -14,10 +17,32 @@ permissions:
   pages: write       # разрешение на публикацию в Pages
   id-token: write    # OIDC-токен для подтверждения деплоя
 
+# Если подряд идут два push, старый запуск отменяется, публикуется только последний
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
-  # Сборка и публикация сайта
+  # Задание 1. Проверка, что нужные файлы сайта на месте
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          for f in index.html style.css main.js; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Файл $f не найден"
+              exit 1
+            fi
+          done
+          echo "Все нужные файлы на месте"
+
+  # Задание 2. Сборка и публикация, только если проверка прошла
   deploy:
+    needs: check
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -42,3 +67,8 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Шаг 5. Записать ссылку на сайт в сводку запуска
+      - name: Write summary
+        run: |
+          echo "Сайт опубликован: ${{ steps.deployment.outputs.page_url }}" » $GITHUB_STEP_SUMMARY
