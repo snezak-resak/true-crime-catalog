@@ -1,10 +1,6 @@
 # True Crime Catalog
 
-[
-
-![Deploy static site](https://github.com/snezak-resak/true-crime-catalog/actions/workflows/deploy.yml/badge.svg)
-
-](https://github.com/snezak-resak/true-crime-catalog/actions/workflows/deploy.yml)
+[![Deploy static site](https://github.com/snezak-resak/true-crime-catalog/actions/workflows/deploy.yml/badge.svg)](https://github.com/snezak-resak/true-crime-catalog/actions/workflows/deploy.yml)
 
 Каталог русскоязычных тру-крайм подкастов: о чём они, в каком тоне и где слушать.
 Статический сайт (HTML, CSS, JavaScript) с автодеплоем через GitHub Actions.
