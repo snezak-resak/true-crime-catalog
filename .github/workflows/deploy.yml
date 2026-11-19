@@ -3,7 +3,7 @@
 
 name: Deploy static site   # название workflow (видно на вкладке Actions)
 
-# Триггеры: при каждом push в main и вручную (кнопка Run workflow на вкладке Actions)
+# Тригеры: при каждом push в main и вручную (кнопка Run workflow на вкладке Actions)
 on:
   push:
     branches: [ main ]
